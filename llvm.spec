@@ -9,8 +9,8 @@
 %endif
 
 Name:		%{?scl_prefix}llvm
-Version:	4.0.0
-Release:	5%{?dist}
+Version:	4.0.1
+Release:	3%{?dist}
 Summary:	The Low Level Virtual Machine
 
 License:	NCSA
@@ -19,7 +19,6 @@ Source0:	http://llvm.org/releases/%{version}/%{pkg_name}-%{version}.src.tar.xz
 
 # recognize s390 as SystemZ when configuring build
 Patch0:		llvm-3.7.1-cmake-s390.patch
-Patch1:		0001-CMake-Fix-pthread-handling-for-out-of-tree-builds.patch
 
 BuildRequires:	%{?scl_prefix}cmake
 BuildRequires:	%{?scl_prefix}cmake-data
@@ -44,6 +43,7 @@ tools as well as libraries with equivalent functionality.
 %package devel
 Summary:	Libraries and header files for LLVM
 Requires:	%{?scl_prefix}%{pkg_name}%{?_isa} = %{version}-%{release}
+Requires: 	%{?scl_prefix}%{pkg_name}-libs = %{version}-%{release}
 
 %description devel
 This package contains library and header files needed to develop new native
@@ -186,6 +186,15 @@ make check-all || :
 %{_libdir}/*.a
 
 %changelog
+* Thu Jun 22 2017 Tom Stellard <tstellar@redhat.com> - 4.0.1-3
+- Fix Requires for devel package again.
+
+* Thu Jun 22 2017 Tom Stellard <tstellar@redhat.com> - 4.0.1-2
+- Fix Requires for llvm-devel
+
+* Tue Jun 20 2017 Tom Stellard <tstellar@redhat.com> - 4.0.1-1
+- 4.0.1 Release
+
 * Mon Jun 05 2017 Tom Stellard <tstellar@redhat.com> - 4.0.0-5
 - Build for llvm-toolset-7 rename
 
